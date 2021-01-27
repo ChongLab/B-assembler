@@ -11,7 +11,5 @@ genomesize: 700000  #extimate genome size in base pair
 # LONGREAD TYPE
 readtype: ONT  #nanopore:ONT, pacbio:pb
 
-# BLAST START GENE SEQUENCE
-dnAGene: script/start_gene.fa
 
-#RESOURCE 
+

@@ -20,14 +20,14 @@ Reasons to use B-assembler:
 Reasons to __not__ use B-assembler:
 * You're assembling a eukaryotic genome or a metagenome (Pipeline is designed exclusively for bacterial isolates).
 * Your long reads are low depth (<50).
-* Your Illumina reads and long reads are from different isolates, or there are just Illumina reads.
+* Your Illumina reads and long reads are from different isolates.
+* only Illumina reads.
 
 # Requirements
-* B-assembler base on snakemake, users must install snakemake before, the intallation follows the instruction: https://snakemake.readthedocs.io/en/stable/getting_started/installation.html#installation-via-conda
 * Linux or macOS
+* B-assembler base on conda, the environments include snakemake are installed by conda, conda:https://conda.io/projects/conda/en/latest/user-guide/install/linux.html 
 * [Python](https://www.python.org/) 3.6 or later
-* conda https://conda.io/projects/conda/en/latest/user-guide/install/linux.html
-* conda installed tools
+* Environments of conda installed tools
   * Flye v2.7 (https://github.com/fenderglass/Flye)
   * Racon (https://github.com/isovic/racon)
   * BWA mem (https://sourceforge.net/projects/bio-bwa/files/)
@@ -46,14 +46,13 @@ git clone https://github.com/huang1990/B-assembler.git; cd B-assembler;
 ## setup the environment
 
 ```
-conda create --name snakemake
-conda activate snakemake
-conda install -c conda-forge -c bioconda snakemake
+conda env create -n B-assembler -f env.yaml
+conda activate B-assembler
 ```
 **Note** It is important that you ensure all bioconda installed tools installed.
 
 ## Write your configuation
-
+###Provide sequence data in config.yaml file
 ```
 vi config.yaml
 ```
@@ -61,36 +60,29 @@ vi config.yaml
 Replace the YAML keys as appropriate. Keys are:
 | Key | Type | Description | 
 |-----|------|-------------|
-|`nanopore` | Path to nanopore reads | It requires path to your nanopore reads, pull all your reads into one fastq file, you can ignore this if you do not have nanopore reads|
-|`pacbio` | Path to pacbio reads | It requires path to your pacbio reads, pull all your reads into one fastq file, you can ignore this if you do not have pacbio reads|
-| `Illumina R1`| path to Illumina R1 | Read1 of paired-end Illumina reads, you can ignore this if you do not have Illumina reads|
-| `Illumina R2`| path to Illumina R2 | Read1 of paired-end Illumina reads, you can ignore this if you do not have Illumina reads|
+|`longread` | Path to Nanopore or Pacbio reads | It requires path to your long reads, pull all your reads into one fastq file, it is recommended to provide absolute path, you can ignore this if you do not have nanopore reads|
+| `Illumina R1`| path to Illumina R1 | Read1 of paired-end Illumina reads, it is recommended to provide absolute path, you can ignore this if you do not have Illumina reads|
+| `Illumina R2`| path to Illumina R2 | Read2 of paired-end Illumina reads, it is recommended to provide absolute path, you can ignore this if you do not have Illumina reads|
 | `genomesize`| int | number of base pair of extimated genomesize of your species|
 | `readtype`| ONT or pb | Type of your long reads, ONT is for nanopore, pb is for pacbio|
-| `dnAGene`| absolute path of B-assembler directary | Your working path before "script/start_gene.fa"|
+| `current pathway`| absolute path of B-assembler directary | start_gene.fa file is in B-assembler/script directary, it needsYour working path to rearrange start point|
 
 ## Engage the pipeline
-Run the pipeline with `snakemake`, you **must** specify `--cores` to ensure that how many threads you give. 
-### Only long read assembly
-run command
+Run the pipeline, you **must** specify `cores` to ensure that how many threads you give. 
+##Usage
 ```
-snakemake --cores N --snakefile snakefile_LongReadOnly 
-```
-for example
-```
-snakemake --cores 2 --snakefile snakefile_LongReadOnly 
-```
+usage: bash run_B-assembler.sh <cores> <LongReadOnly/Hybrid>
 
-### hybrid read assembly
-run command
+Require arguments:
+cores:int
+         threads provided for pipeline
+LongReadOnly/Hybrid
+         assembly mode for your reads 
 ```
-snakemake --cores N --snakefile snakefile_hybrid 
+##Examples
 ```
-for example
+bash run_B-assembler.sh 2 LongReadOnly
 ```
-snakemake --cores 2 --snakefile snakefile_hybrid 
-```
-
 # output
 
 The final assembly will be in the output directory, and the name of assembly: B-assembler.fasta

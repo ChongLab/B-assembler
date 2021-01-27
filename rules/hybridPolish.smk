@@ -9,9 +9,11 @@ rule bwa_1:
     conda:
         'envs/bwa.yaml'
     shell:
-        'bwa index {input.long};'
-        'bwa mem -t 8 {input.long} {input.short_1} {input.short_2} |samtools view -Sb - | samtools sort - -o {output.bam};'
-        'samtools index {output.bam}'
+        """
+        bwa index {input.long};
+        bwa mem -t 8 {input.long} {input.short_1} {input.short_2} |samtools view -Sb - | samtools sort - -o {output.bam};
+        samtools index {output.bam}
+        """
 
 rule pilon_polish_1:
     input:
@@ -23,8 +25,9 @@ rule pilon_polish_1:
         output_prefix = 'merge_pilon_corrected_1',
         output_dir = 'output'
     shell:
-        "java -Xmx10G -jar script/pilon-1.23.jar --genome {input.long} --frags {input.bam} --fix all --output {params.output_prefix} --outdir {params.output_dir}" 
-
+        """
+        java -Xmx10G -jar script/pilon-1.23.jar --genome {input.long} --frags {input.bam} --fix all --output {params.output_prefix} --outdir {params.output_dir} 
+        """
 rule bwa_2:
     input:
         long = "output/merge_pilon_corrected_1.fasta",
@@ -36,10 +39,11 @@ rule bwa_2:
     conda:
         'envs/bwa.yaml'
     shell:
-        'bwa index {input.long};'
-        'bwa mem -t 8 {input.long} {input.short_1} {input.short_2} |samtools view -Sb - | samtools sort - -o {output.bam};'
-        'samtools index {output.bam}'
-
+        """
+        bwa index {input.long};
+        bwa mem -t 8 {input.long} {input.short_1} {input.short_2} |samtools view -Sb - | samtools sort - -o {output.bam};
+        samtools index {output.bam}
+        """
 rule pilon_polish_2:
     input:
         long = 'output/merge_pilon_corrected_1.fasta',
@@ -50,8 +54,9 @@ rule pilon_polish_2:
         output_prefix = 'merge_pilon_corrected_2',
         output_dir = 'output'
     shell:
-        "java -Xmx10G -jar script/pilon-1.23.jar --genome {input.long} --frags {input.bam} --fix all --output {params.output_prefix} --outdir {params.output_dir}"
-
+        """
+        java -Xmx10G -jar script/pilon-1.23.jar --genome {input.long} --frags {input.bam} --fix all --output {params.output_prefix} --outdir {params.output_dir}
+        """
 rule bwa_3:
     input:
         long = "output/merge_pilon_corrected_2.fasta",
@@ -63,10 +68,11 @@ rule bwa_3:
     conda:
         'envs/bwa.yaml'
     shell:
-        'bwa index {input.long};'
-        'bwa mem -t 8 {input.long} {input.short_1} {input.short_2} |samtools view -Sb - | samtools sort - -o {output.bam};'
-        'samtools index {output.bam}'
-
+        """
+        bwa index {input.long};
+        bwa mem -t 8 {input.long} {input.short_1} {input.short_2} |samtools view -Sb - | samtools sort - -o {output.bam};
+        samtools index {output.bam}
+        """
 rule pilon_polish_3:
     input:
         long = 'output/merge_pilon_corrected_2.fasta',
@@ -77,8 +83,9 @@ rule pilon_polish_3:
         output_prefix = 'merge_pilon_corrected_3',
         output_dir = 'output'
     shell:
-        "java -Xmx10G -jar script/pilon-1.23.jar --genome {input.long} --frags {input.bam} --fix all --output {params.output_prefix} --outdir {params.output_dir}"
-
+        """
+        java -Xmx10G -jar script/pilon-1.23.jar --genome {input.long} --frags {input.bam} --fix all --output {params.output_prefix} --outdir {params.output_dir}
+        """
 rule bwa_4:
     input:
         long = "output/merge_pilon_corrected_3.fasta",
@@ -90,9 +97,11 @@ rule bwa_4:
     conda:
         'envs/bwa.yaml'
     shell:
-        'bwa index {input.long};'
-        'bwa mem -t 8 {input.long} {input.short_1} {input.short_2} |samtools view -Sb - | samtools sort - -o {output.bam};'
-        'samtools index {output.bam}' 
+        """
+        bwa index {input.long};
+        bwa mem -t 8 {input.long} {input.short_1} {input.short_2} |samtools view -Sb - | samtools sort - -o {output.bam};
+        samtools index {output.bam}
+        """ 
 
 rule pilon_polish_4:
     input:
@@ -104,5 +113,6 @@ rule pilon_polish_4:
         output_prefix = 'merge_corrected_4',
         output_dir = 'output'
     shell:
-        "java -Xmx10G -jar script/pilon-1.23.jar --genome {input.long} --frags {input.bam} --fix all --output {params.output_prefix} --outdir {params.output_dir}"
-
+        """
+        java -Xmx10G -jar script/pilon-1.23.jar --genome {input.long} --frags {input.bam} --fix all --output {params.output_prefix} --outdir {params.output_dir}
+        """

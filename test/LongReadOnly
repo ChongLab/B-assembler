@@ -1,0 +1,26 @@
+# The main entry point of your workflow.
+# After configuring, running snakemake --cores N #give the specific number of threads 
+
+#import config
+configfile: 'config_test.yaml'
+
+#import rules
+include: 'rules/LongReadSelectLongRead.smk'
+include: 'rules/firstround.smk'
+include: 'rules/secondround.smk'
+include: 'rules/tworoundMerge.smk'
+include: 'rules/LongReadPolish.smk'
+include: 'rules/rearrangeStart.smk'
+
+wildcard_constraints:
+extension = '(fa|fna|fasta)',  # extension is either .fa, .fna, or .fasta
+
+
+def all_input(wildcards):
+    """
+    Function defining all requested inputs for the rule all (below).
+    """
+
+rule all:
+    input:
+        "output/B_assembly.fasta"

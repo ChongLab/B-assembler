@@ -4,8 +4,9 @@ rule longread_len:
     output:
         "output/read_len_distrbution_2.txt"
     shell:
-        "python script/ReadLengthDistribution.py {input} {output}"
-
+        """
+        python scripts/ReadLengthDistribution.py {input} {output}
+        """
 rule select_longread:
     input:
         raw=config['longread'],
@@ -16,16 +17,18 @@ rule select_longread:
     params:
         config['genomesize']
     shell:
-        'python script/SelectLongRead.py {input.raw} {input.lenDis} {params} {output.long} {output.short}'
-
+        """
+        python scripts/SelectLongRead.py {input.raw} {input.lenDis} {params} {output.long} {output.short}
+        """
 rule fq_to_fa:
     input:
         "output/filter_length.fq"
     output:
         "output/filter_length.fa"
     shell:
-        "python script/FqToFa.py {input} {output}"
-
+        """
+        python scripts/FqToFa.py {input} {output}
+        """
 ##longRead_correct
 par=""
 readType=config['readtype']
@@ -43,8 +46,9 @@ rule short_to_long:
     params:
         type=par
     shell:
-        "minimap2 -ax {params.type} {input.long} {input.short} > {output}"
-
+        """
+        minimap2 -ax {params.type} {input.long} {input.short} > {output}
+        """
 rule longread_polish:
     input:
         long = 'output/filter_length.fa',
@@ -53,4 +57,6 @@ rule longread_polish:
     output:
         "output/long_read_corrected.fasta"
     shell:
-        "racon {input.short} {input.sam} {input.long} > {output}"
+        """
+        racon {input.short} {input.sam} {input.long} > {output}
+        """

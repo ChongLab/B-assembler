@@ -8,8 +8,9 @@ rule endReads_select:
         end="output/EndAlign.fq",
         begin="output/beginAlign.fq"
     shell:
-        "python script/ExtractEndReads.py {input.fa} {input.bam} {output.begin} {output.end}"
-
+        """
+        python scripts/ExtractEndReads.py {input.fa} {input.bam} {output.begin} {output.end}
+        """
 rule merge_end_reads:
     input:
         "output/EndAlign.fq",
@@ -18,16 +19,18 @@ rule merge_end_reads:
         Endfq="output/EndReads.fq",
         Endfa="output/EndReads.fa"
     shell:
-        "cat {input} > {output.Endfq} && python script/FqToFa.py {output.Endfq} {output.Endfa}"
-
+        """
+        cat {input} > {output.Endfq} && python scripts/FqToFa.py {output.Endfq} {output.Endfa}
+        """
 rule remove_dupl:
     input:
         "output/EndReads.fa"
     output:
         "output/EndReads_dupl_remove.fa"
     shell:
-        "python script/RemoveDuplicateReads.py {input} {output}"
-
+        """
+        python scripts/RemoveDuplicateReads.py {input} {output}
+        """
 #secondrun assembly
 par=""
 readType=config['readtype']
@@ -47,13 +50,15 @@ rule second_assembly:
         type=par,
         size=resize
     shell:
-        "flye {params.type} {input} --min-overlap 1000 --asm-coverage 50 --genome-size {params.size} --out-dir {params.dir}"
-
+        """
+        flye {params.type} {input} --min-overlap 1000 --genome-size {params.size} --out-dir {params.dir}
+        """
 rule select_longContig:
     input:
         "output/secondrun/assembly.fasta"
     output:
         "output/secondrunOneline.fa"
     shell:
-        "python script/PrintOneLine.py {input} {output}"
-
+        """
+        python scripts/PrintOneLine.py {input} {output}
+        """

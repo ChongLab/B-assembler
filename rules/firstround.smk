@@ -18,8 +18,9 @@ rule first_assemble:
         genoSize=config['genomesize'],
         type=par 
     shell:
-        "flye {params.type} {input} --min-overlap 1000 --asm-coverage 50 --genome-size {params.genoSize} --out-dir {params.dir}"
-
+        """
+        flye {params.type} {input} --min-overlap 1000 --genome-size {params.genoSize} --out-dir {params.dir}
+        """
 ##extract plasmid sequence
 rule select_longestContig:
     input:
@@ -27,7 +28,9 @@ rule select_longestContig:
     output:
         "output/firstrun.fa"
     shell:
-        "python script/SelectPlasmidID_LongestContig.py {input} {output}"
+        """
+        python scripts/SelectPlasmidID_LongestContig.py {input} {output}
+        """
 
 rule rawfq_firstrun:
     input:
@@ -39,6 +42,7 @@ rule rawfq_firstrun:
     params:
         type=mini
     shell:
-        "minimap2 -ax {params.type} {input.firstrun} {input.rawfq} | samtools view -Sb - | samtools sort - -o {output.bam} && samtools index {output.bam} > {output.bai}"
-
+        """
+        minimap2 -ax {params.type} {input.firstrun} {input.rawfq} | samtools view -Sb - | samtools sort - -o {output.bam} && samtools index {output.bam} > {output.bai}
+        """
 

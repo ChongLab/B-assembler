@@ -15,8 +15,9 @@ rule polish_round1:
     params:
         type=par
     shell:
-        "minimap2 -ax {params.type} {input.assembly} {input.read} > output/rawfq_merged.sam && racon {input.read} output/rawfq_merged.sam {input.assembly} > {output}"
-
+        """
+        minimap2 -ax {params.type} {input.assembly} {input.read} > output/rawfq_merged.sam && racon {input.read} output/rawfq_merged.sam {input.assembly} > {output}
+        """
 rule polish_round2:
     input:
         assembly="output/racon_polish_1.fa",

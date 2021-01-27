@@ -5,15 +5,17 @@ rule tworun_align:
     output:
         "output/first_second.paf"
     shell:
-        "minimap2 -cx asm20 {input.fir} {input.sec} > {output}"
-
+        """
+        minimap2 -cx asm20 {input.fir} {input.sec} > {output}
+        """
 rule merge:
     input:
         paf="output/first_second.paf",
         first="output/firstrun.fa",
         second="output/secondrunOneline.fa"
     output:
-        merge="output/First_second_merge.fa",
+        merge="output/First_second_merge.fa"
     shell:
-        "python script/MergeTwoRun.py {input.paf} {input.first} {input.second} {output.merge}"
-
+        """
+        python scripts/MergeTwoRun.py {input.paf} {input.first} {input.second} {output.merge}
+        """

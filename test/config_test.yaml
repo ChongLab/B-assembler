@@ -1,0 +1,16 @@
+# DATA
+longread: test/test_ONT.fastq  # Path to Nanopore or pacbio long reads, all long reads should be in a fastq file
+
+illumina:
+    R1: data/51226_S1_L001_R1_001.fastq.gz  # Path to Illumina R1 reads
+    R2: data/51226_S1_L001_R2_001.fastq.gz  # Path to Illumina R2 reads
+
+# REQUIREMENT
+genomesize: 100000  #extimate genome size in base pair
+
+# LONGREAD TYPE
+readtype: ONT  #nanopore:ONT, pacbio:pb
+
+# working path of B-assembler
+dnAGene: scripts/start_gene.fa
+

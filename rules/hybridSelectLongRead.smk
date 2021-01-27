@@ -4,7 +4,7 @@ rule longread_len:
     output:
         "output/read_len_distrbution_2.txt"
     shell:
-        "python script/ReadLengthDistribution.py {input} {output}"
+        "python scripts/ReadLengthDistribution.py {input} {output}"
 
 rule select_longread:
     input:
@@ -16,7 +16,9 @@ rule select_longread:
     params:
         config['genomesize']
     shell:
-        'python script/SelectLongRead.py {input.raw} {input.lenDis} {params} {output.long} {output.short}'
+        """
+        python scripts/SelectLongRead.py {input.raw} {input.lenDis} {params} {output.long} {output.short}
+        """
 
 rule fq_to_fa:
     input:
@@ -24,8 +26,9 @@ rule fq_to_fa:
     output:
         "output/filter_length.fa"
     shell:
-        "python script/FqToFa.py {input} {output}"
-
+        """
+        python scripts/FqToFa.py {input} {output}
+        """
 ##longRead_correct
 rule bwa:
     input:
@@ -52,5 +55,6 @@ rule longread_polish:
         output_prefix = 'long_read_corrected',
         output_dir = 'output'
     shell:
-        "java -Xmx10G -jar script/pilon-1.23.jar --genome {input.long} --frags {input.bam} --fix all --output {params.output_prefix} --outdir {params.output_dir}"
-
+        """
+        java -Xmx10G -jar script/pilon-1.23.jar --genome {input.long} --frags {input.bam} --fix all --output {params.output_prefix} --outdir {params.output_dir}
+        """
