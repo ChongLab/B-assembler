@@ -1,6 +1,6 @@
 rule bwa_1:
     input:
-        long = "output/First_second_merge.fa",
+        long = "output/firstrun.fa",
         short_1 = config['illumina']['R1'],
         short_2 = config['illumina']['R2']
     output:

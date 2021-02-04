@@ -9,7 +9,7 @@ include: 'rules/LongReadSelectLongRead.smk'
 include: 'rules/firstround.smk'
 include: 'rules/secondround.smk'
 include: 'rules/tworoundMerge.smk'
-include: 'rules/LongReadPolish.smk'
+include: 'rules/LongreadPolish_new.smk'
 include: 'rules/rearrangeStart.smk'
 
 wildcard_constraints:

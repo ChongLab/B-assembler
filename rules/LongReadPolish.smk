@@ -8,7 +8,7 @@ else:
 
 rule polish_round1:
     input:
-        assembly="output/First_second_merge.fa",
+        assembly="output/firstrun.fa",
         read=config['longread']
     output:
         "output/racon_polish_1.fa"

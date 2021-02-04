@@ -12,6 +12,8 @@ outfile_2 = sys.argv[5]
 file=open(len_distr,'r')
 n=0
 rd_sum=0
+rd_line=0
+rd_len=""
 
 for line in file:
     n+=1

@@ -46,7 +46,7 @@ git clone https://github.com/huang1990/B-assembler.git; cd B-assembler;
 ## setup the environment
 
 ```
-conda env create -n B-assembler -f env.yaml
+conda env create -n B-assembler -f env.yaml flye=2.7.1
 conda activate B-assembler
 ```
 **Note** It is important that you ensure all bioconda installed tools installed.
@@ -65,7 +65,6 @@ Replace the YAML keys as appropriate. Keys are:
 | `Illumina R2`| path to Illumina R2 | Read2 of paired-end Illumina reads, it is recommended to provide absolute path, you can ignore this if you do not have Illumina reads|
 | `genomesize`| int | number of base pair of extimated genomesize of your species|
 | `readtype`| ONT or pb | Type of your long reads, ONT is for nanopore, pb is for pacbio|
-| `current pathway`| absolute path of B-assembler directary | start_gene.fa file is in B-assembler/script directary, it needsYour working path to rearrange start point|
 
 ## Engage the pipeline
 Run the pipeline, you **must** specify `cores` to ensure that how many threads you give. 
