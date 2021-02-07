@@ -5,13 +5,13 @@
 configfile: 'config.yaml'
 
 #import rules
-include: 'rules/hybridSelectLongRead.smk'
+include: 'rules/hybridSelectLongRead2.smk'
 include: 'rules/firstround.smk'
 #include: 'rules/selectEndRead.smk'
 include: 'rules/secondround.smk'
 include: 'rules/tworoundMerge.smk'
-include: 'rules/hybridPolish.smk'
 include: 'rules/rearrangeStart.smk'
+include: 'rules/hybridPolish.smk'
 
 wildcard_constraints:
 extension = '(fa|fna|fasta)',  # extension is either .fa, .fna, or .fasta
@@ -22,4 +22,5 @@ def all_input(wildcards):
     """
 rule all:
     input:
-        "output/B_assembly.fasta"
+        "output/B-assembler.fasta"
+

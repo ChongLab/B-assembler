@@ -46,7 +46,7 @@ git clone https://github.com/huang1990/B-assembler.git; cd B-assembler;
 ## setup the environment
 
 ```
-conda env create -n B-assembler -f env.yaml flye=2.7.1
+conda env create -n B-assembler -f env.yaml
 conda activate B-assembler
 ```
 **Note** It is important that you ensure all bioconda installed tools installed.
@@ -70,13 +70,19 @@ Replace the YAML keys as appropriate. Keys are:
 Run the pipeline, you **must** specify `cores` to ensure that how many threads you give. 
 ##Usage
 ```
-usage: bash run_B-assembler.sh <cores> <LongReadOnly/Hybrid>
+Usage: bash run_B-assembler.sh <numCPUs> <LongReadOnly|Hybrid> [output:PWD]
 
 Require arguments:
-cores:int
+numCPUs: int
          threads provided for pipeline
-LongReadOnly/Hybrid
-         assembly mode for your reads 
+
+LongReadOnly|Hybrid
+         assembly mode for your reads, type "LongReadOnly" or "Hybrid" based on your data
+
+Optional argument:
+output:
+	 output directory, current working directory by default
+
 ```
 ##Examples
 ```
